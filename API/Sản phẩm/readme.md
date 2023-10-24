@@ -148,3 +148,39 @@ Dữ liệu trả về định dạng như sau
     "status": 200
 }
 ```
+
+## 4. API xóa sản phẩm
+> **Note**: Chỉ xóa được sản phẩm khi sản phẩm đó không có child
+
+URL:
+```
+Method DELETE: {{base_url}}/api/v1/product/delete/{id}
+```
+{id}: id của sản phẩm muốn xóa
+
+Dữ liệu trả về định dạng như sau
+```
+{
+    "message": "Destroy product success",
+    "data": {
+        "id": 10,
+        "name": "Sản phẩm 9",
+        "code": "SP9",
+        "price": 200,
+        "description": null,
+        "thumbnail": "https://.../storage/report/24-10-2023/1698140184_xe.jpg",
+        "type": 1,
+        "branch": null,
+        "status": 1,
+        "parent_id": null,
+        "related_product_ids": null,
+        "created_at": "2023-10-24T09:38:30.000000Z",
+        "updated_at": "2023-10-24T09:54:22.000000Z",
+        "sort_order": 10,
+        "file_attachment": null,
+        "gallery": null,
+        "children": []
+    },
+    "status": 200
+}
+```
