@@ -2,8 +2,8 @@
 
 *******
 Danh sách chức năng:  
- 1. [Xây dựng chức năng lấy danh sách sản phẩm (có phân trang)](#list_product)
- 2. [Xây dựng chức năng tạo sản phẩm](#create_product)
+ 1. [Danh sách sản phẩm (phân trang)](#list_product)
+ 2. [Thêm mới sản phẩm](#create_product)
  3. [Chi tiết sản phẩm](#show_product)
  4. [Cập nhật sản phẩm](#update_basic_product)
  5. [Xóa sản phẩm](#delete_product)
