@@ -1,8 +1,22 @@
 # This is Code logic backend Product
 
-## 1. Xây dựng chức năng lấy danh sách sản phẩm
+*******
+Danh sách các logic mẫu  
+ 1. [Xây dựng chức năng lấy danh sách sản phẩm (có phân trang)](#list_product)
+ 2. [Xây dựng chức năng tạo sản phẩm](#create_product)
+ 3. [Chi tiết sản phẩm](#show_product)
+ 4. [Cập nhật sản phẩm](#update_basic_product)
+ 5. [Xóa sản phẩm](#delete_product)
 
-* Bước 1: Tạo controller<br>
+*******
+
+<div id='list_product'/> 
+
+## 1. Xây dựng chức năng lấy danh sách sản phẩm (có phân trang)
+
+* Bước 1: Tạo controller
+<br></br>
+
 Tạo controller có tên là ProductController
 ```bash
 php artisan make:controller Api\ProductController --api
@@ -25,7 +39,9 @@ class ProductController extends Controller
 }
 ```	
 
-* Bước 2: Tạo file service cho sản phẩm
+* Bước 2: Tạo file service và function lấy danh sách cho sản phẩm
+<br></br>
+
 Ở bước này, chúng ta tạo một file `ProductService.php` trong folder `App\Services\Product`.
 
 ```
@@ -40,7 +56,7 @@ class ProductService
 ```
 
 Thêm `const LIMIT = 30;` để cấu hình danh sách phân trang nếu không có tham số truyền vào.
-<br>
+<br></br>
 
 Tạo mới một function. Ở đây tôi đặt tên tên là `list()` để lấy ra danh sách của sản phẩm. Function này sẽ được gọi phía controller.
 ```
@@ -84,6 +100,8 @@ class ProductService
 ```
 
 * Bước 3: Trở lại controller thêm service cho function `index()`
+<br></br>
+
 Ở bước 2 ta có nói sẽ tạo service lấy danh sách sản phẩm có phân trang.
 Vậy ở đâu sẽ gọi service này để lấy dữ liệu?
 Tất nhiên là trong `ProductController`.
@@ -126,7 +144,9 @@ class ProductController extends Controller
 
 Trong hàm `index()` khởi tạo class `new ProductService()` ở service vừa viết để lấy dữ liệu và trả về cho người dùng.
 
-Bước 4: Tạo route để lấy dữ liệu
+* Bước 4: Tạo route để lấy dữ liệu
+<br></br>
+
 Oh hòm hòm rồi nhưng làm sao để gọi được controller?
 Đừng lo, vào `routes\api.php` khởi tạo route
 ```
@@ -135,10 +155,19 @@ Route::get('/', [ProductController::class, 'index']);
 })
 ```
 Để test kết quả hãy nhập `{{base_url}}/api/v1/product` với `{{base_url}}` là domain của website
-<br>
-Haha xong chức năng lấy danh sách sản phẩm có phân trang rồi :laughing:.
+<br></br>
+
+Haha xong chức năng lấy danh sách sản phẩm có phân trang rồi :laughing::laughing:.
 
 * Biến `$request` chứa những tham số truyền vào cho mục đích lọc dữ liệu
+
+<div id="create_product"></div>
+
+## 2. Xây dựng chức năng tạo sản phẩm
+<br></br>
+
+Ở trên ta đã tạo `ProductController` và `ProductService` rồi nên không cần thực hiện bước 
+
 
 ## Note utiles: 
 * Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`.
