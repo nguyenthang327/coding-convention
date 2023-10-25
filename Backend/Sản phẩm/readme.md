@@ -103,7 +103,9 @@ class ProductService
 <br></br>
 
 Ở bước 2 ta có nói sẽ tạo service lấy danh sách sản phẩm có phân trang.
+
 Vậy ở đâu sẽ gọi service này để lấy dữ liệu?
+
 Tất nhiên là trong `ProductController`.
 ```
 <?php
@@ -145,7 +147,6 @@ class ProductController extends Controller
 Trong hàm `index()` khởi tạo class `new ProductService()` ở service vừa viết để lấy dữ liệu và trả về cho người dùng.
 
 * Bước 4: Tạo route để lấy dữ liệu
-<br></br>
 
 Oh hòm hòm rồi nhưng làm sao để gọi được controller?
 Đừng lo, vào `routes\api.php` khởi tạo route
@@ -155,26 +156,20 @@ Route::prefix('/product')->group(function () {
 })
 ```
 Để test kết quả hãy nhập `{{base_url}}/api/v1/product` với `{{base_url}}` là domain của website
-<br></br>
 
 Haha xong chức năng lấy danh sách sản phẩm có phân trang rồi :laughing::laughing:.
 
 <div id="create_product"></div>
 
 ## 2. Xây dựng chức năng tạo sản phẩm
-<br></br>
 
 Ở trên ta đã tạo `ProductController` và `ProductService` rồi nên không cần thực hiện tạo lại nữa và sẽ viết thêm các chức năng liên quan trong này.
-<br></br>
 
 Khi tạo sản phẩm bạn thường viết validate `Request` trong controller đúng không.
-<br></br>
 
 Oh shit :face_with_spiral_eyes::face_with_spiral_eyes:, ở đây chúng tôi không làm thế. Tôi muốn chia nhỏ chức năng, cái nào ra cái đó.
-<br></br>
 
 Yeah bắt đầu nào :wink:
-<br></br>
 
 * Bước 1: Validate Request
 Tạo file validate `StoreProductRequest.php`. Tạo như thế nào?
@@ -184,12 +179,8 @@ php artisan make:request StoreProductRequest
 oh sau khi chạy command này bạn sẽ nhận được một file trong folder `App\Http\Requests`
 
 lalala xử lý thôi.
-<br></br>
 
 - Trong function `authorize()` đổi thành `return true;`
-
-<br></br>
-
 - Trong function `rules()` validate tham số truyền vào. Dưới đây là ví dụ nho nhỏ.
 
 ```
@@ -274,7 +265,6 @@ class ProductController extends Controller
 Trước đây ta viết `public function store(Request $request)` và 1 đống validation bên trong controller. Bây giờ chỉ còn như đoạn mã trên, bạn thấy sao hehe.
 
 * Bước 3: xử lý logic thêm mới trong service
-<br></br>
 
 Chúng ta đang thêm mới sản phẩm vậy ta sẽ xử lý logic thêm mới sản phẩm trong file `ProductService.php`
 ```
@@ -314,8 +304,10 @@ class ProductService
 ```
 
 Đối với những đoạn code phức tạp xử lý logic nhiều bạn có thể `comment` ghi chú để sau này maintain dễ dàng hơn. Đoạn trên mình chỉ ví dụ comment thôi chứ logic đơn giản vãi chưởng nhìn phát hiểu ngay.
-> **Note**: - Logic khó, xử lý phức tạp => comment
-            - Logic đơn giản, dễ đọc => không cần comment
+
+> [!NOTE]:
+> - Logic khó, xử lý phức tạp => comment
+> - Logic đơn giản, dễ đọc => không cần comment
 
 
 ## Note utiles: 
