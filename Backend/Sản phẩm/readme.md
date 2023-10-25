@@ -320,5 +320,6 @@ Route::prefix('/product')->group(function () {
 Haha xong chức năng thêm mới sản phẩm rồi :laughing::laughing:.
 
 ## Note utiles: 
-* Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`.
+* Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`. Điều này giúp chúng ta dễ dàng phát hiện nguyên nhân lỗi và debug lỗi đó.
 * Đối với các chức năng thêm, sửa, xóa blabla... nói chung là thay đổi dữ liệu trong database ta cần thêm `DB::beginTransaction()`, `DB::commit()`, `DB::rollback()` để phòng những trường hợp lỗi và có thể rollback lại mà không gây ảnh hưởng đến database.
+* Khi tạo hay cập nhật dữ liệu mình sẽ tạo file trong `App\Http\Requests`
