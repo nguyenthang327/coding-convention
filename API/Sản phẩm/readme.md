@@ -2,7 +2,20 @@
 Do you want to get data from the api? Follow me hihi @@
 > **Note**: Sản phẩm chỉ có 2 cấp. Các api response có key `related_product_ids` mặc định là null vì đang lưu dữ liệu sản phẩm liên quan tại bảng related_products.
 
-<br>
+*******
+Table des matières  
+ 1. [API lấy danh sách sản phẩm (có phân trang)](#API_list_product)
+ 2. [API tạo sản phẩm](#API_create_product)
+ 3. [API chi tiết sản phẩm](#API_show_product)
+ 4. [API cập nhật sản phẩm](#API_update_basic_product)
+ 5. [API xóa sản phẩm](#API_delete_product)
+ 6. [API lấy danh sách sản phẩm cha](#API_get_list_parent_product)
+ 7. [API lấy danh sách sản phẩm (không phân trang)](#API_get_list_product_no_paginate)
+ 8. [API cập nhật sản phẩm (cập nhật thông tin chi tiết của sản phẩm)](#API_update_detail_product)
+
+*******
+
+<div id='API_list_product'/>  
 
 ## 1. API lấy danh sách sản phẩm (có phân trang)
 
@@ -70,6 +83,8 @@ Dữ liệu trả về định dạng như sau
 
 <br>
 
+<div id='API_create_product'/> 
+
 ## 2. API tạo sản phẩm
 URL:
 ```
@@ -108,9 +123,162 @@ Dữ liệu trả về định dạng như sau
 }
 ```
 
-<br>
+<div id='API_show_product'/> 
 
-## 3. API cập nhật sản phẩm (thông tin cơ bản)
+## 3. API chi tiết sản phẩm
+URL:
+```
+Method GET: {{base_url}}/api/v1/product/{id}
+```
+{id}: id của sản phẩm
+
+Dữ liệu trả về định dạng như sau
+```
+{
+    "message": "success",
+    "data": {
+        "id": 9,
+        "name": "sản phẩm bịp",
+        "code": "sp10",
+        "price": 500,
+        "description": "Sản phẩm này không hề bịp",
+        "thumbnail": "https://.../report/24-10-2023/1698140184_xe.jpg",
+        "type": 1,
+        "branch": null,
+        "status": 1,
+        "parent_id": null,
+        "related_product_ids": null,
+        "created_at": "2023-10-24T09:36:26.000000Z",
+        "updated_at": "2023-10-25T02:05:22.000000Z",
+        "sort_order": 9,
+        "file_attachment":"[{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053063_4 t\ính ch\ất c\ủa oop.docx\",\"file_name\":\"4 t\ính ch\ất c\ủa oop.docx\"},{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053064_C\âu tr\ả l\ời.docx\",\"file_name\":\"C\âu tr\ả l\ời.docx\"}]",
+        "gallery": "[{\"file_path\":\"http:\\/\\/...\\/storage\\/report\\/21-10-2023\\/1697854960_Screenshot (4) - Copy - Copy - Copy.png\",\"file_name\":\"Screenshot (4) - Copy - Copy - Copy.png\"},{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053562_Screenshot (2) - Copy.png\",\"file_name\":\"Screenshot (2) - Copy.png\"}]",
+        "productGroup": [
+            {
+                "id": 9,
+                "name": "sản phẩm bịp",
+                "code": "sp10",
+                "price": 500,
+                "description": "Sản phẩm này không hề bịp",
+                "thumbnail": "https://.../report/24-10-2023/1698140184_xe.jpg",
+                "type": 1,
+                "branch": null,
+                "status": 1,
+                "parent_id": null,
+                "related_product_ids": null,
+                "created_at": "2023-10-24T09:36:26.000000Z",
+                "updated_at": "2023-10-25T02:05:22.000000Z",
+                "sort_order": 9,
+                "file_attachment":"[{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053063_4 t\ính ch\ất c\ủa oop.docx\",\"file_name\":\"4 t\ính ch\ất c\ủa oop.docx\"},{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053064_C\âu tr\ả l\ời.docx\",\"file_name\":\"C\âu tr\ả l\ời.docx\"}]",
+                "gallery": "[{\"file_path\":\"http:\\/\\/...\\/storage\\/report\\/21-10-2023\\/1697854960_Screenshot (4) - Copy - Copy - Copy.png\",\"file_name\":\"Screenshot (4) - Copy - Copy - Copy.png\"},{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053562_Screenshot (2) - Copy.png\",\"file_name\":\"Screenshot (2) - Copy.png\"}]"
+            }
+        ],
+        "specifications": [
+            {
+                "id": 7,
+                "code": "TS2",
+                "name": "Thong so 2",
+                "desc": null,
+                "sort_order": 7,
+                "specification_group_id": 7,
+                "created_at": "2023-10-19T03:46:17.000000Z",
+                "updated_at": "2023-10-19T03:46:17.000000Z",
+                "pivot": {
+                    "product_id": 9,
+                    "specification_id": 7,
+                    "info": "ay",
+                    "created_at": "2023-10-25T01:53:42.000000Z",
+                    "updated_at": "2023-10-25T02:05:22.000000Z"
+                }
+            },
+            {
+                "id": 8,
+                "code": "TS3",
+                "name": "Thong so 3",
+                "desc": null,
+                "sort_order": 8,
+                "specification_group_id": 2,
+                "created_at": "2023-10-19T03:46:36.000000Z",
+                "updated_at": "2023-10-19T03:46:36.000000Z",
+                "pivot": {
+                    "product_id": 9,
+                    "specification_id": 8,
+                    "info": "ay i",
+                    "created_at": "2023-10-25T01:53:42.000000Z",
+                    "updated_at": "2023-10-25T02:05:22.000000Z"
+                }
+            }
+        ],
+        "related_products": [
+            {
+                "id": 1,
+                "name": "ô tô",
+                "code": "SP01",
+                "price": 100,
+                "description": "xxx",
+                "thumbnail": "http://.../report/18-10-2023/1697613053_hang rao.png",
+                "type": 1,
+                "branch": null,
+                "status": 1,
+                "parent_id": null,
+                "related_product_ids": null,
+                "created_at": "2023-10-18T07:10:57.000000Z",
+                "updated_at": "2023-10-23T02:42:05.000000Z",
+                "sort_order": 1,
+                "file_attachment": null,
+                "gallery": null,
+                "pivot": {
+                    "product_id": 9,
+                    "related_product_id": 1
+                }
+            },
+            {
+                "id": 4,
+                "name": "Sp con sp 1",
+                "code": "SP01-child",
+                "price": 150,
+                "description": null,
+                "thumbnail": "https://.../report/23-10-2023/1698053277_Screenshot (5).png",
+                "type": 2,
+                "branch": null,
+                "status": 1,
+                "parent_id": 1,
+                "related_product_ids": null,
+                "created_at": "2023-10-18T07:41:34.000000Z",
+                "updated_at": "2023-10-23T09:27:59.000000Z",
+                "sort_order": 4,
+                "file_attachment": null,
+                "gallery": null,
+                "pivot": {
+                    "product_id": 9,
+                    "related_product_id": 4
+                }
+            }
+        ]
+    },
+    "status": 200
+}
+```
+
+Các key quan trọng
+| KEY      DESCRIPTION |
+| ------|-----|
+| id | Tên sản phẩm |
+| code | Mã sản phẩm |
+| name | Tên sản phẩm |
+| type | Loại sản phẩm `type = 1 (Sản phẩm), type = 2 (Biến thể)` |
+| price | Giá bán sản phẩm |
+| parent_id | Mã của sản phẩm cha |
+| thumbnail | URL ảnh thumbnail của sản phẩm  |
+| file_attachment | các tệp tin tài liệu kỹ thuật |
+| gallery | Lưới ảnh |
+| specifications | thông số của sản phẩm |
+| productGroup | các sản phẩm cùng nhóm |
+| related_products | Các sản phẩm liên quan |
+
+<div id='API_update_basic_product'/> 
+
+## 4. API cập nhật sản phẩm (thông tin cơ bản)
 
 URL:
 ```
@@ -155,9 +323,9 @@ Dữ liệu trả về định dạng như sau
 }
 ```
 
-<br>
+<div id='API_delete_product'/> 
 
-## 4. API xóa sản phẩm
+## 5. API xóa sản phẩm
 > **Note**: Chỉ xóa được sản phẩm khi sản phẩm đó không có child
 
 URL:
@@ -193,9 +361,9 @@ Dữ liệu trả về định dạng như sau
 }
 ```
 
-<br>
+<div id='API_get_list_parent_product'/> 
 
-## 5. API lấy danh sách sản phẩm cha
+## 6. API lấy danh sách sản phẩm cha
 
 URL:
 ```
@@ -230,9 +398,9 @@ Dữ liệu trả về định dạng như sau
 }
 ```
 
-<br>
+<div id='API_get_list_product_no_paginate'/> 
 
-## 6. API lấy danh sách sản phẩm (không phân trang)
+## 7. API lấy danh sách sản phẩm (không phân trang)
 
 URL:
 ```
@@ -264,9 +432,9 @@ Dữ liệu trả về định dạng như sau
 }
 ```
 
-<br>
+<div id='API_update_detail_product'/> 
 
-## 7. API cập nhật sản phẩm (cập nhật thông tin chi tiết của sản phẩm)
+## 8. API cập nhật sản phẩm (cập nhật thông tin chi tiết của sản phẩm)
 
 API này sử dụng khi cập nhật sản phẩm trong modal chỉnh sửa sản phẩm tại màn chi tiết sản phẩm.<br>
 URL:
