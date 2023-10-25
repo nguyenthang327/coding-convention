@@ -3,7 +3,7 @@ Do you want to get data from the api? Follow me hihi @@
 > **Note**: Sản phẩm chỉ có 2 cấp. Các api response có key `related_product_ids` mặc định là null vì đang lưu dữ liệu sản phẩm liên quan tại bảng related_products.
 
 *******
-Table des matières  
+Danh sách các api  
  1. [API lấy danh sách sản phẩm (có phân trang)](#API_list_product)
  2. [API tạo sản phẩm](#API_create_product)
  3. [API chi tiết sản phẩm](#API_show_product)
