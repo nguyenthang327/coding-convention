@@ -171,7 +171,7 @@ Oh shit :face_with_spiral_eyes::face_with_spiral_eyes:, ở đây chúng tôi kh
 
 Yeah bắt đầu nào :wink:
 
-* Bước 1: Validate Request
+### Bước 1: Validate Request
 Tạo file validate `StoreProductRequest.php`. Tạo như thế nào?
 ```
 php artisan make:request StoreProductRequest
@@ -219,9 +219,9 @@ class StoreProductRequest extends FormRequest
     }
 }
 ```
+<br></br>
 
 * Bước 2: Xử lý trong controller
-<br></br>
 
 Vào ProductController thêm đoạn mã sau
 
