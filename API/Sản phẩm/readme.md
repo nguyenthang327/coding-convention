@@ -261,7 +261,7 @@ Dữ liệu trả về định dạng như sau
 ```
 
 Các key quan trọng
-| KEY      DESCRIPTION |
+| KEY    |  DESCRIPTION |
 | ------|-----|
 | id | Tên sản phẩm |
 | code | Mã sản phẩm |
