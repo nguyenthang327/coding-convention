@@ -3,6 +3,7 @@ Do you want to get data from the api? Follow me hihi @@
 > **Note**: Sản phẩm chỉ có 2 cấp. Các api response có key `related_product_ids` mặc định là null vì đang lưu dữ liệu sản phẩm liên quan tại bảng related_products.
 
 <br>
+
 ## 1. API lấy danh sách sản phẩm (có phân trang)
 
 URL:
@@ -68,6 +69,7 @@ Dữ liệu trả về định dạng như sau
 ```
 
 <br>
+
 ## 2. API tạo sản phẩm
 URL:
 ```
@@ -107,6 +109,7 @@ Dữ liệu trả về định dạng như sau
 ```
 
 <br>
+
 ## 3. API cập nhật sản phẩm (thông tin cơ bản)
 
 URL:
@@ -153,6 +156,7 @@ Dữ liệu trả về định dạng như sau
 ```
 
 <br>
+
 ## 4. API xóa sản phẩm
 > **Note**: Chỉ xóa được sản phẩm khi sản phẩm đó không có child
 
@@ -190,6 +194,7 @@ Dữ liệu trả về định dạng như sau
 ```
 
 <br>
+
 ## 5. API lấy danh sách sản phẩm cha
 
 URL:
@@ -226,6 +231,7 @@ Dữ liệu trả về định dạng như sau
 ```
 
 <br>
+
 ## 6. API lấy danh sách sản phẩm (không phân trang)
 
 URL:
@@ -259,9 +265,10 @@ Dữ liệu trả về định dạng như sau
 ```
 
 <br>
-## 7. API cập nhật sản phẩm (cập nhật thông tin chi tiết của sản phẩm)
-API này sử dụng khi cập nhật sản phẩm trong modal chỉnh sửa sản phẩm tại màn chi tiết sản phẩm.
 
+## 7. API cập nhật sản phẩm (cập nhật thông tin chi tiết của sản phẩm)
+
+API này sử dụng khi cập nhật sản phẩm trong modal chỉnh sửa sản phẩm tại màn chi tiết sản phẩm.<br>
 URL:
 ```
 Method PUT: {{base_url}}/api/v1/product/update-specification/{id}
