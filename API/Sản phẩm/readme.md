@@ -381,7 +381,7 @@ Dữ liệu trả về định dạng như sau
       "code": "SP01",
       "price": 100,
       "description": "xxx",
-      "thumbnail": "http://.../1697613053_hang rao.png",
+      "thumbnail": "https://.../1697613053_hang rao.png",
       "type": 1,
       "branch": null,
       "status": 1,
@@ -476,7 +476,7 @@ Dữ liệu dưới đây tôi truyền vào dạng raw (json)
     ],
     "gallery": [
         {
-            "file_path": "http://.../1697854960_Screenshot (4) - Copy - Copy - Copy.png",
+            "file_path": "https://.../1697854960_Screenshot (4) - Copy - Copy - Copy.png",
             "file_name": "Screenshot (4) - Copy - Copy - Copy.png"
         },
         {
@@ -508,7 +508,7 @@ Dữ liệu trả về định dạng như sau
         "updated_at": "2023-10-25T02:05:22.000000Z",
         "sort_order": 9,
         "file_attachment":"[{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053063_4 t\ính ch\ất c\ủa oop.docx\",\"file_name\":\"4 t\ính ch\ất c\ủa oop.docx\"},{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053064_C\âu tr\ả l\ời.docx\",\"file_name\":\"C\âu tr\ả l\ời.docx\"}]",
-        "gallery": "[{\"file_path\":\"http:\\/\\/...\\/storage\\/report\\/21-10-2023\\/1697854960_Screenshot (4) - Copy - Copy - Copy.png\",\"file_name\":\"Screenshot (4) - Copy - Copy - Copy.png\"},{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053562_Screenshot (2) - Copy.png\",\"file_name\":\"Screenshot (2) - Copy.png\"}]"
+        "gallery": "[{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/21-10-2023\\/1697854960_Screenshot (4) - Copy - Copy - Copy.png\",\"file_name\":\"Screenshot (4) - Copy - Copy - Copy.png\"},{\"file_path\":\"https:\\/\\/...\\/storage\\/report\\/23-10-2023\\/1698053562_Screenshot (2) - Copy.png\",\"file_name\":\"Screenshot (2) - Copy.png\"}]"
     },
     "status": 200
 }
