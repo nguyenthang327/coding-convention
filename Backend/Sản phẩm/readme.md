@@ -14,7 +14,7 @@ Danh sách các logic mẫu
 
 ## 1. Xây dựng chức năng lấy danh sách sản phẩm (có phân trang)
 
-* Bước 1: Tạo controller
+### Bước 1: Tạo controller
 <br></br>
 
 Tạo controller có tên là ProductController
@@ -39,8 +39,7 @@ class ProductController extends Controller
 }
 ```	
 
-* Bước 2: Tạo file service và function lấy danh sách cho sản phẩm
-<br></br>
+### Bước 2: Tạo file service và function lấy danh sách cho sản phẩm
 
 Ở bước này, chúng ta tạo một file `ProductService.php` trong folder `App\Services\Product`.
 
@@ -99,8 +98,7 @@ class ProductService
 }
 ```
 
-* Bước 3: Trở lại controller thêm service cho function `index()`
-<br></br>
+### Bước 3: Trở lại controller thêm service cho function `index()`
 
 Ở bước 2 ta có nói sẽ tạo service lấy danh sách sản phẩm có phân trang.
 
@@ -146,7 +144,7 @@ class ProductController extends Controller
 
 Trong hàm `index()` khởi tạo class `new ProductService()` ở service vừa viết để lấy dữ liệu và trả về cho người dùng.
 
-* Bước 4: Tạo route để lấy dữ liệu
+### Bước 4: Tạo route để lấy dữ liệu
 
 Oh hòm hòm rồi nhưng làm sao để gọi được controller?
 Đừng lo, vào `routes\api.php` khởi tạo route
@@ -221,7 +219,7 @@ class StoreProductRequest extends FormRequest
 ```
 <br></br>
 
-* Bước 2: Xử lý trong controller
+### Bước 2: Xử lý trong controller
 
 Vào ProductController thêm đoạn mã sau
 
@@ -264,7 +262,7 @@ class ProductController extends Controller
 
 Trước đây ta viết `public function store(Request $request)` và 1 đống validation bên trong controller. Bây giờ chỉ còn như đoạn mã trên, bạn thấy sao hehe.
 
-* Bước 3: xử lý logic thêm mới trong service
+### Bước 3: xử lý logic thêm mới trong service
 
 Chúng ta đang thêm mới sản phẩm vậy ta sẽ xử lý logic thêm mới sản phẩm trong file `ProductService.php`
 ```
