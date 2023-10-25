@@ -145,6 +145,7 @@ Trong hàm `index()` khởi tạo class `new ProductService()` ở service vừa
 ### Bước 4: Tạo route để lấy dữ liệu
 
 Oh hòm hòm rồi nhưng làm sao để gọi được controller?
+
 Đừng lo, vào `routes\api.php` khởi tạo route
 ```
 Route::prefix('/product')->group(function () {
@@ -297,15 +298,26 @@ class ProductService
     ...
 }
 ```
+Đoạn code này chỉ là một đoạn code đơn giản. Nhưng đối với những đoạn code phức tạp xử lý logic nhiều bạn có thể `comment` ghi chú để sau này `maintain` dễ dàng hơn. Đoạn trên mình chỉ ví dụ comment thôi chứ logic đơn giản vãi chưởng nhìn phát hiểu ngay.
 
-Đối với những đoạn code phức tạp xử lý logic nhiều bạn có thể `comment` ghi chú để sau này maintain dễ dàng hơn. Đoạn trên mình chỉ ví dụ comment thôi chứ logic đơn giản vãi chưởng nhìn phát hiểu ngay.
-
-À bạn thấy gì không, ngoài bắt `exception` ghi `log` lỗi ra thì cũng cần xử lý `Transaction` khi thao tác với `database`. Việc này giúp phòng những trường hợp lỗi thì sẽ tự động có rollback lại mà không gây ảnh hưởng đến `database`
+À bạn thấy gì không, ngoài bắt `exception` ghi `log` lỗi ra thì cũng cần xử lý `Transaction` khi thao tác với `database`. Việc này giúp phòng những trường hợp lỗi thì sẽ tự động `rollback` lại mà không gây ảnh hưởng đến `database`.
 
 > **Note**:
 > - Logic khó, xử lý phức tạp => comment
 > - Logic đơn giản, dễ đọc => không cần comment
 
+### Bước 4: Tạo route
+Oh hòm hòm rồi. Vào `routes\api.php` khởi tạo route lưu sản phẩm thôi nào
+
+```
+Route::prefix('/product')->group(function () {
+    ...
+    Route::post('/store', [ProductController::class, 'store']);
+})
+```
+Để test kết quả hãy nhập `{{base_url}}/api/v1/product/store` với `{{base_url}}` là domain của website cùng với các tham số truyền vào.
+
+Haha xong chức năng thêm mới sản phẩm rồi :laughing::laughing:.
 
 ## Note utiles: 
 * Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`.
