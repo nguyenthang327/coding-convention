@@ -15,7 +15,6 @@ Danh sách các logic mẫu
 ## 1. Xây dựng chức năng lấy danh sách sản phẩm (có phân trang)
 
 ### Bước 1: Tạo controller
-<br></br>
 
 Tạo controller có tên là ProductController
 ```bash
@@ -55,7 +54,6 @@ class ProductService
 ```
 
 Thêm `const LIMIT = 30;` để cấu hình danh sách phân trang nếu không có tham số truyền vào.
-<br></br>
 
 Tạo mới một function. Ở đây tôi đặt tên tên là `list()` để lấy ra danh sách của sản phẩm. Function này sẽ được gọi phía controller.
 ```
@@ -217,7 +215,6 @@ class StoreProductRequest extends FormRequest
     }
 }
 ```
-<br></br>
 
 ### Bước 2: Xử lý trong controller
 
@@ -302,6 +299,8 @@ class ProductService
 ```
 
 Đối với những đoạn code phức tạp xử lý logic nhiều bạn có thể `comment` ghi chú để sau này maintain dễ dàng hơn. Đoạn trên mình chỉ ví dụ comment thôi chứ logic đơn giản vãi chưởng nhìn phát hiểu ngay.
+
+À bạn thấy gì không, ngoài bắt `exception` ghi `log` lỗi ra thì cũng cần xử lý `Transaction` khi thao tác với `database`. Việc này giúp phòng những trường hợp lỗi thì sẽ tự động có rollback lại mà không gây ảnh hưởng đến `database`
 
 > **Note**:
 > - Logic khó, xử lý phức tạp => comment
