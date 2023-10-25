@@ -1,7 +1,7 @@
-# This is Code logic backend Product
+# Module Sản phẩm (Product)
 
 *******
-Danh sách các logic mẫu  
+Danh sách chức năng:  
  1. [Xây dựng chức năng lấy danh sách sản phẩm (có phân trang)](#list_product)
  2. [Xây dựng chức năng tạo sản phẩm](#create_product)
  3. [Chi tiết sản phẩm](#show_product)
