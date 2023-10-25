@@ -135,7 +135,8 @@ Route::get('/', [ProductController::class, 'index']);
 })
 ```
 Để test kết quả hãy nhập `{{base_url}}/api/v1/product` với `{{base_url}}` là domain của website
-Haha xong chức năng lấy danh sách sản phẩm có phân trang rồi :laughing.
+<br>
+Haha xong chức năng lấy danh sách sản phẩm có phân trang rồi :laughing:.
 
 * Biến `$request` chứa những tham số truyền vào cho mục đích lọc dữ liệu
 
