@@ -305,7 +305,7 @@ class ProductService
 
 Đối với những đoạn code phức tạp xử lý logic nhiều bạn có thể `comment` ghi chú để sau này maintain dễ dàng hơn. Đoạn trên mình chỉ ví dụ comment thôi chứ logic đơn giản vãi chưởng nhìn phát hiểu ngay.
 
-> [!NOTE]:
+> **Note**:
 > - Logic khó, xử lý phức tạp => comment
 > - Logic đơn giản, dễ đọc => không cần comment
 
