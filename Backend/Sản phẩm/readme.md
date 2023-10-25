@@ -53,7 +53,6 @@ use Illuminate\Support\Facades\Log;
 class ProductService
 {
     const LIMIT = 30;
-    ...
     public function list($request)
     {
         try {
@@ -79,8 +78,13 @@ class ProductService
             throw new Exception('[ProductService][list] error ' . $e->getMessage());
         }
     }
+    ...
 }
 ```
+<br>
+Biến `$request` chứa những tham số truyền vào cho mục đích lọc dữ liệu
+<br>
 
-> **Note**: Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`.
-
+## Note: 
+* Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`.
+* Đối với các chức năng thêm, sửa, xóa blabla... nói chung là thay đổi dữ liệu trong database ta cần thêm `DB::beginTransaction()`, `DB::commit()`, `DB::rollback()` để phòng những trường hợp lỗi và có thể rollback lại mà không gây ảnh hưởng đến database
