@@ -2,9 +2,9 @@
 
 *******
 Các mục cần chú ý:  
- 1. [Cấu trúc thư mục](#folder_structure)
- 2. [Chi tiết cấu trúc file](#file_structure_detail)
-  - - [2.1]
+[1. Cấu trúc thư mục](#folder_structure)
+[2. Chi tiết cấu trúc file](#file_structure_detail)
+- [2.1. Layouts master](#file_structure_detail)
 
 *******
 
