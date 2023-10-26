@@ -5,7 +5,7 @@
 - Các api response có key `related_product_ids` mặc định là null vì đang lưu dữ liệu sản phẩm liên quan tại bảng related_products.
 
 *******
-Danh sách các api  
+Danh sách api  
  1. [API lấy danh sách sản phẩm (phân trang)](#API_list_product)
  2. [API tạo sản phẩm](#API_create_product)
  3. [API chi tiết sản phẩm](#API_show_product)
@@ -21,9 +21,9 @@ Danh sách các api
 
 ## 1. API lấy danh sách sản phẩm (phân trang)
 
-URL:
 ```
-Method GET: {{base_url}}/api/v1/product
+URL: {{base_url}}/api/v1/product
+Method GET
 ```
 
 Tham số truyền vào
@@ -34,7 +34,7 @@ Tham số truyền vào
 | limit | 10 ( tùy ý) | nullable | Số lượng bản ghi trên 1 trang|
 
 Dữ liệu trả về
-```
+```json
 {
     "message": "Get list product success",
     "data": {
@@ -105,7 +105,7 @@ Tham số truyền vào
 
 
 Dữ liệu trả về
-```
+```json
 {
     "message": "Create product success",
     "data": {
@@ -135,15 +135,15 @@ Method GET: {{base_url}}/api/v1/product/{id}
 {id}: id của sản phẩm
 
 Dữ liệu trả về
-```
+```json
 {
     "message": "success",
     "data": {
         "id": 9,
-        "name": "sản phẩm bịp",
+        "name": "sản phẩm xịn",
         "code": "sp10",
         "price": 500,
-        "description": "Sản phẩm này không hề bịp",
+        "description": "Sản phẩm này víp",
         "thumbnail": "https://.../report/24-10-2023/1698140184_xe.jpg",
         "type": 1,
         "branch": null,
@@ -440,12 +440,13 @@ Dữ liệu trả về
 
 API này sử dụng khi cập nhật sản phẩm trong modal chỉnh sửa sản phẩm tại màn chi tiết sản phẩm.<br>
 URL:
-```bash
+```
 Method PUT: {{base_url}}/api/v1/product/update-specification/{id}
 ```
 {id}: id của sản phẩm
 
 Tham số truyền vào
+
 Dữ liệu dưới đây tôi truyền vào dạng raw (json)
 ```json
 {
@@ -488,7 +489,7 @@ Dữ liệu dưới đây tôi truyền vào dạng raw (json)
     ]
 }
 ```
-> **Note**: Bạn cũng có thể truyền dữ liệu dạng form-data (Phải custom lại). Tôi để dạng raw cho ae dễ nhìn
+> **Note**: Bạn cũng có thể truyền dữ liệu dạng form-data (Phải custom lại). Tôi để dạng json cho dễ nhận biết
 
 Dữ liệu trả về
 ```json
