@@ -6,6 +6,7 @@ Các mục cần chú ý:
 
 [2. Cấu trúc file](#file_structure_detail)
 - [2.1. File master.blade.php](#file_master)
+- [2.2. File script-libary.blade.php](#file_script_libary)
 
 *******
 
@@ -82,14 +83,12 @@ Chia thư mục lưu trữ như sau
 
 ## 2. Cấu trúc file
 
+> **Note**: Tránh sử dụng link cdn khi import thư viện js, css. Nên download file về để sử dụng hoặc tải thư viện trong node_modules
+
 <div id='file_master'/>
 
 ## 2.1 File master.blade.php
 ```html
-<?php
-
-date_default_timezone_set('Asia/Ho_Chi_Minh');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,6 +134,8 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
     </div>
 
     <!-- import các libary js chung cần thiết -->
+        <!-- Tránh sử dụng link cdn vì đây chỉ là ví dụ demo. Nên download file về để sử dụng hoặc tải thư viện trong node_modules -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <!-- import các libary js riêng nếu cần với page đó -->
     @yield('js_library')
@@ -144,6 +145,32 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
     <!-- common js -->
     <script src="{{ asset('assets/js/common.js') }}"></script>
+    <script>
+        // check section success => show toast
+        @if (Session::has('success'))
+            Toastify({
+                text: `{!! session('success') !!}`,
+                duration: 3000,
+                stopOnFocus: true,
+
+            }).showToast();
+        @endif
+
+        // check section error => show toast
+        @if (Session::has('error'))
+            Toastify({
+
+                text: "{!! session('error') !!}",
+                duration: 3000,
+                stopOnFocus: true,
+                style: {
+                    background: "#FE6244",
+                },
+
+            }).showToast();
+        @endif
+    </script>
 </body>
+</html>
 
 ```
