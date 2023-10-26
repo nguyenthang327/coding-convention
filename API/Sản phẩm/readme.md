@@ -88,9 +88,10 @@ Dữ liệu trả về
 <div id='API_create_product'/> 
 
 ## 2. API tạo sản phẩm
-URL:
+
 ```
-Method POST: {{base_url}}/api/v1/product/store
+URL: {{base_url}}/api/v1/product/store
+Method POST
 ```
 
 Tham số truyền vào
@@ -128,9 +129,10 @@ Dữ liệu trả về
 <div id='API_show_product'/> 
 
 ## 3. API chi tiết sản phẩm
-URL:
+
 ```
-Method GET: {{base_url}}/api/v1/product/{id}
+URL: {{base_url}}/api/v1/product/{id}
+Method GET
 ```
 {id}: id của sản phẩm
 
@@ -282,9 +284,9 @@ Các key quan trọng
 
 ## 4. API cập nhật sản phẩm (thông tin cơ bản)
 
-URL:
 ```
-Method PUT: {{base_url}}/api/v1/product/update/{id}
+URL: {{base_url}}/api/v1/product/update/{id}
+Method PUT
 ```
 {id}: id của sản phẩm
 
@@ -330,9 +332,9 @@ Dữ liệu trả về
 ## 5. API xóa sản phẩm
 > **Note**: Chỉ xóa được sản phẩm khi sản phẩm đó không có child
 
-URL:
 ```
-Method DELETE: {{base_url}}/api/v1/product/delete/{id}
+URL: {{base_url}}/api/v1/product/delete/{id}
+Method DELETE
 ```
 {id}: id của sản phẩm muốn xóa
 
@@ -367,9 +369,9 @@ Dữ liệu trả về
 
 ## 6. API lấy danh sách sản phẩm cha
 
-URL:
 ```
-Method GET: {{base_url}}/api/v1/parent-product
+URL: {{base_url}}/api/v1/parent-product
+Method GET 
 ```
 
 Dữ liệu trả về
@@ -404,9 +406,9 @@ Dữ liệu trả về
 
 ## 7. API lấy danh sách sản phẩm (không phân trang)
 
-URL:
 ```
-Method GET: {{base_url}}/api/v1/product-no-paginate
+URL: {{base_url}}/api/v1/product-no-paginate
+Method GET
 ```
 
 Dữ liệu trả về
@@ -439,9 +441,10 @@ Dữ liệu trả về
 ## 8. API cập nhật sản phẩm (cập nhật thông tin chi tiết của sản phẩm)
 
 API này sử dụng khi cập nhật sản phẩm trong modal chỉnh sửa sản phẩm tại màn chi tiết sản phẩm.<br>
-URL:
+
 ```
-Method PUT: {{base_url}}/api/v1/product/update-specification/{id}
+URL: {{base_url}}/api/v1/product/update-specification/{id}
+Method PUT
 ```
 {id}: id của sản phẩm
 
