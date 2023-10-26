@@ -34,7 +34,8 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    use RESTResponse; // trait phục vụ cho xử lý dữ liệu trả về của api
+    # trait common của ứng dụng. Sử dụng để trả về dữ liệu api bao gồm data, message và trạng thái
+    use RESTResponse;
     ...
 }
 ```	
@@ -120,6 +121,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
+    # trait common của ứng dụng. Sử dụng để trả về dữ liệu api bao gồm data, message và trạng thái
     use RESTResponse;
 
     /**
@@ -227,6 +229,8 @@ use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
+    # trait common của ứng dụng. Sử dụng để trả về dữ liệu api bao gồm data, message và trạng thái
+    use RESTResponse;
     ...
     /**
      * Store a newly created resource in storage.
@@ -265,7 +269,7 @@ class ProductService
 {
     ...
     public function storeProduct($request){
-        DB::beginTransaction(); // Khởi tạo Database transaction
+        DB::beginTransaction(); // Khởi tạo DB::beginTransaction
         try {
             # xử lý request truyền vào
             $params = [
@@ -316,10 +320,375 @@ Test trên postman:
 
 ### Bước 1: Thêm function show() trong controller
 ```php
+<?php
 
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Traits\RESTResponse;
+use App\Services\Product\ProductService;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class ProductController extends Controller
+{
+     # trait common của ứng dụng. Sử dụng để trả về dữ liệu api bao gồm data, message và trạng thái
+    use RESTResponse;
+    ...
+   
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        try{
+            $productService = new ProductService(); // khởi tạo class ProductService
+            $data = $productService->getDetail($id); // gọi đến function getDetail() trong ProductService để xử lý logic lấy chi tiết sản phẩm với $id của sản phẩm
+
+            # nếu không có sản phẩm
+            if (empty($data)) {
+                return $this->throwNotFoundError('Product not found'); // trả về 404
+            }
+
+            # trả về dữ liệu json
+            return $this
+                ->setData($data) // set giá trị $data trả về
+                ->setMessage('success')  // set Message trả về
+                ->successResponse(); // set status trả về
+        }catch(Exception $e){
+            Log::error("[ProductController][show] error " . $e->getMessage()); // log lỗi
+            return $this->throwInternalError($e);
+        }
+    }
+}
 ```
+
+### Bước 2: Thêm function getDetail() trong ProductService
+
+```php
+<?php
+
+namespace App\Services\Product;
+
+...
+
+class ProductService
+{
+    ...
+    // Lấy dữ liệu chi tiết sản phẩm
+    public function getDetail($id){
+        try {
+            # query sản phẩm theo id
+            $product = Product::where('id', $id)
+                ->first();
+
+            # nếu không có trả về null
+            if(!$product){
+                return null;
+            }
+
+            # trả về dữ liệu sản phẩm
+            return $product;
+        } catch (Exception $e) {
+            Log::error("[ProductService][getDetail] error " . $e->getMessage()); // log lỗi
+            throw new Exception('[ProductService][getDetail] error ' . $e->getMessage());
+        }
+    }
+    ...
+}
+```
+
+### Bước 3: Tạo route
+
+Vào `routes\api.php` khởi tạo route lấy chi tiết sản phẩm
+
+```php
+Route::prefix('/product')->group(function () {
+    ...
+    Route::get('/{id}', [ProductController::class, 'show']);
+})
+```
+Test trên postman:
+```
+- URL: {{base_url}}/api/v1/product/{id}
+- Method: GET
+```
+
+<div id="update_product"></div>
+
+## 4. Cập nhật sản phẩm
+
+### Bước 1: Validate Request
+
+Tạo file xử lý validate, có thể sử dụng lại file `StoreProductRequest.php` hoặc có thể tạo mới
+
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use App\Models\Product;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreProductRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true; // Chuyển giá trị từ false thành true
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     */
+    public function rules(): array
+    {
+        # Viết các điều kiện validate nếu lỗi trả về 422
+        $rules = [
+            'code' => 'required|string|max:255|unique:products,code,' . $this->route('id'), // Trường hợp này thêm $this->route('id') là có thể dùng file request này khi update dữ liệu
+            'name' => 'required|string|max:255',
+            'price' => 'nullable|numeric|min:0',
+            'description' => 'nullable|string',
+        ];
+        return $rules;
+    }
+}
+```
+
+### Bước 2: Thêm function update() trong controller
+
+Vào `ProductController.php` thêm đoạn mã sau
+
+```php
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Traits\RESTResponse;
+use App\Services\Product\ProductService;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class ProductController extends Controller
+{
+    # trait common của ứng dụng. Sử dụng để trả về dữ liệu api bao gồm data, message và trạng thái
+    use RESTResponse;
+    ...
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StoreProductRequest $request, string $id)
+    {
+        try{
+            $productService = new ProductService(); // khởi tạo class ProductService
+            $data = $productService->updateProduct($request, $id); // gọi đến function updateProduct() trong ProductService để xử lý cập nhật sản phẩm với tham số $request và $id sản phẩm
+
+            if(empty($data)){
+                return $this->throwNotFoundError('Product not found');
+            }
+            return $this
+                ->setData($data) // set giá trị $data trả về
+                ->setMessage('Update product success') // set Message trả về
+                ->successResponse(); // set status trả về
+        }catch(Exception $e){
+            Log::error("[ProductController][update] error " . $e->getMessage()); // log lỗi
+            return $this->throwInternalError($e);
+        }
+    }
+    ...
+}
+```
+
+### Bước 3: Thêm logic cập nhật sản phẩm trong ProductService
+
+Tại file `ProductService.php` thêm function `updateProduct()`
+```php
+<?php
+
+namespace App\Services\Product;
+
+...
+
+class ProductService
+{
+    ...
+
+    # service cập nhật sản phẩm
+    public function updateProduct($request, $id)
+    {
+        DB::beginTransaction();  // Khởi tạo DB::beginTransaction
+        try {
+            # truy vấn sản phẩm theo id
+            $product = Product::where('id', $id)->first();
+
+            # nếu không có thì trả về null
+            if (!$product) {
+                return null;
+            }
+
+            # xử lý tham số truyền vào
+            $params = [
+                'name' => $request->input('name'), // tên
+                'code' => $request->input('code'), // mã code
+                'price' => $request->input('price'), // giá
+                'description' => $request->input('description'), // mô tả
+            ];
+
+            # cập nhật thông tin sản phẩm
+            $product->update($params);
+
+            DB::commit(); // thực hiện lưu dữ liệu vào DB nếu không xảy ra exception
+
+            # Trả về dữ liệu
+            return $product;
+        } catch (Exception $e) {
+            DB::rollBack(); // rollback khi xảy ra lỗi
+            Log::error("[ProductService][updateProduct] error " . $e->getMessage()); // log lỗi
+            throw new Exception('[ProductService][updateProduct] error ' . $e->getMessage());
+        }
+    }
+    ...
+}
+```
+
+### Bước 4: Tạo route
+
+Vào `routes\api.php` khởi tạo route lưu sản phẩm
+
+```php
+Route::prefix('/product')->group(function () {
+    ...
+    Route::put('/update/{id}', [ProductController::class, 'update']);
+})
+```
+Test trên postman:
+```
+- URL: {{base_url}}/api/v1/product/update/{id}
+- Method: PUT
+- Param: các tham số cần truyền
+```
+
+
+
+<div id="delete_product"></div>
+
+## 5. Xóa sản phẩm
+
+### Bước 1: Thêm function destroy() trong controller
+```php
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Traits\RESTResponse;
+use App\Services\Product\ProductService;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class ProductController extends Controller
+{
+     # trait common của ứng dụng. Sử dụng để trả về dữ liệu api bao gồm data, message và trạng thái
+    use RESTResponse;
+    ...
+
+     /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        try{
+            $productService = new ProductService(); // khởi tạo class ProductService
+            $data = $productService->destroyProduct($id); // gọi đến function destroyProduct() trong ProductService để xử lý logic xóa sản phẩm với $id của sản phẩm
+
+            # nếu không có sản phẩm
+            if(empty($data)){
+                return $this->throwNotFoundError('Product not found'); // trả về 404
+            }
+            return $this
+                ->setData($data) // set giá trị $data trả về
+                ->setMessage('Destroy product success') // set Message trả về
+                ->successResponse(); // set status trả về
+        }catch(Exception $e){
+            Log::error("[ProductController][destroy] error " . $e->getMessage()); // log lỗi
+            return $this->throwInternalError($e);
+        }
+    }
+}
+```
+
+### Bước 2: Thêm function destroyProduct() trong ProductService
+
+```php
+<?php
+
+namespace App\Services\Product;
+
+...
+
+class ProductService
+{
+    ...
+
+    // service xóa sản phẩm với tham số id là mã sản phẩm
+    public function destroyProduct($id)
+    {
+        DB::beginTransaction();  // Khởi tạo DB::beginTransaction
+        try {
+            # query sản phẩm theo id
+            $product = Product::where('id', $id)->first();
+
+            # nếu không có trả về null
+            if (!$product) {
+                return null;
+            }
+
+            # trường hợp có thì thực hiện xóa sản phẩm
+            $product->delete();
+
+            DB::commit(); // thực hiện lưu dữ liệu vào DB nếu không xảy ra exception
+
+            # trả về dữ liệu sản phẩm
+            return $product;
+        } catch (Exception $e) {
+            DB::rollBack();  // rollback khi xảy ra lỗi
+            Log::error("[ProductService][destroyProduct] error " . $e->getMessage()); // log lỗi
+            throw new Exception('[ProductService][destroyProduct] error ' . $e->getMessage());
+        }
+    }
+    ...
+}
+```
+
+### Bước 3: Tạo route
+
+Vào `routes\api.php` khởi tạo route xóa sản phẩm
+
+```php
+Route::prefix('/product')->group(function () {
+    ...
+    Route::delete('/delete/{id}', [ProductController::class, 'destroy']);
+})
+```
+Test trên postman:
+```
+- URL: {{base_url}}/api/v1/product/delete/{id}
+- Method: DELETE
+```
+
 
 ## Note utiles: 
 * Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`. Điều này giúp chúng ta dễ dàng phát hiện nguyên nhân lỗi và debug lỗi đó.
 * Đối với các chức năng thêm, sửa, xóa blabla... nói chung là thay đổi dữ liệu trong database ta cần thêm `DB::beginTransaction()`, `DB::commit()`, `DB::rollback()` để phòng những trường hợp lỗi và có thể rollback lại mà không gây ảnh hưởng đến database.
-* Khi tạo hay cập nhật dữ liệu mình sẽ tạo file trong `App\Http\Requests`
