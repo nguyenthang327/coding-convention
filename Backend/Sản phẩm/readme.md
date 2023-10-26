@@ -21,6 +21,7 @@ Tạo controller có tên là ProductController
 php artisan make:controller Api\ProductController --api
 ```
 Thêm trait `RESTResponse` cho controller
+
 File controller có dạng
 ```
 <?php
@@ -53,7 +54,7 @@ class ProductService
 }
 ```
 
-Thêm [`const LIMIT = 30;`]("Hằng số cấu hình phân trang") hằng số cấu hình phân trang [Display text]("Hover text").
+Thêm [`const LIMIT = 30;`]("Hằng số cấu hình phân trang") [hover text](## "your hover text") hằng số cấu hình phân trang [Display text]("Hover text").
 
 Tạo function `list()` lấy danh sách của sản phẩm như sau.
 ```
