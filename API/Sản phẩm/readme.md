@@ -300,7 +300,7 @@ Tham số truyền vào
 
 
 Dữ liệu trả về
-```
+```json
 {
     "message": "Update product success",
     "data": {
@@ -337,7 +337,7 @@ Method DELETE: {{base_url}}/api/v1/product/delete/{id}
 {id}: id của sản phẩm muốn xóa
 
 Dữ liệu trả về
-```
+```json
 {
     "message": "Destroy product success",
     "data": {
@@ -373,7 +373,7 @@ Method GET: {{base_url}}/api/v1/parent-product
 ```
 
 Dữ liệu trả về
-```
+```json
 {
   "message": "Get list parent product success",
   "data": [
@@ -410,7 +410,7 @@ Method GET: {{base_url}}/api/v1/product-no-paginate
 ```
 
 Dữ liệu trả về
-```
+```json
 {
     "message": "Get list product success",
     "data": [
@@ -440,14 +440,14 @@ Dữ liệu trả về
 
 API này sử dụng khi cập nhật sản phẩm trong modal chỉnh sửa sản phẩm tại màn chi tiết sản phẩm.<br>
 URL:
-```
+```bash
 Method PUT: {{base_url}}/api/v1/product/update-specification/{id}
 ```
 {id}: id của sản phẩm
 
 Tham số truyền vào
 Dữ liệu dưới đây tôi truyền vào dạng raw (json)
-```
+```json
 {
     "name" : "sản phẩm víp",
     "price" : "500",
@@ -491,7 +491,7 @@ Dữ liệu dưới đây tôi truyền vào dạng raw (json)
 > **Note**: Bạn cũng có thể truyền dữ liệu dạng form-data (Phải custom lại). Tôi để dạng raw cho ae dễ nhìn
 
 Dữ liệu trả về
-```
+```json
 {
     "message": "Update product success",
     "data": {

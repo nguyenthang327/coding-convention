@@ -54,8 +54,6 @@ class ProductService
 }
 ```
 
-Thêm [`const LIMIT = 30;`]("Hằng số cấu hình phân trang") [hover text](## "your hover text") hằng số cấu hình phân trang [Display text]("Hover text").
-
 Tạo function `list()` lấy danh sách của sản phẩm như sau.
 ```
 <?php
@@ -250,7 +248,7 @@ class ProductController extends Controller
 }
 ```
 
-### Bước 3: Thêm logic thêm mới trong ProductService
+### Bước 3: Thêm logic thêm mới sản phẩm trong ProductService
 
 Tại file `ProductService.php` thêm function `storeProduct()`
 ```
