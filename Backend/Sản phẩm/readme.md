@@ -578,8 +578,6 @@ Test trên postman:
 - Param: các tham số cần truyền
 ```
 
-
-
 <div id="delete_product"></div>
 
 ## 5. Xóa sản phẩm
