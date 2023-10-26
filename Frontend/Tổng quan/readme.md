@@ -134,7 +134,7 @@ Chia thư mục lưu trữ như sau
     </div>
 
     <!-- import các libary js chung cần thiết -->
-        <!-- Tránh sử dụng link cdn vì đây chỉ là ví dụ demo. Nên download file về để sử dụng hoặc tải thư viện trong node_modules -->
+    <!-- Tránh sử dụng link cdn vì đây chỉ là ví dụ demo. Nên download file về để sử dụng hoặc tải thư viện trong node_modules -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <!-- import các libary js riêng nếu cần với page đó -->
