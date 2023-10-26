@@ -12,7 +12,7 @@ Danh sách chức năng:
 
 <div id='list_product'/> 
 
-## 1. Xây dựng chức năng lấy danh sách sản phẩm (có phân trang)
+## 1. Danh sách sản phẩm (phân trang)
 
 ### Bước 1: Tạo controller
 
@@ -20,8 +20,8 @@ Tạo controller có tên là ProductController
 ```bash
 php artisan make:controller Api\ProductController --api
 ```
-Sau đó add trait `RESTResponse` cho controller
-File controller sẽ có dạng sau
+Thêm trait `RESTResponse` cho controller
+File controller có dạng
 ```
 <?php
 
@@ -33,14 +33,14 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    use RESTResponse;
+    use RESTResponse; // trait phục vụ cho xử lý dữ liệu trả về của api
     ...
 }
 ```	
 
-### Bước 2: Tạo file service và function lấy danh sách cho sản phẩm
+### Bước 2: Tạo file service và function lấy danh sách sản phẩm
 
-Ở bước này, chúng ta tạo một file `ProductService.php` trong folder `App\Services\Product`.
+Tạo file `ProductService.php` trong folder `App\Services\Product`.
 
 ```
 <?php
@@ -53,7 +53,7 @@ class ProductService
 }
 ```
 
-Thêm `const LIMIT = 30;` để cấu hình danh sách phân trang nếu không có tham số truyền vào.
+Thêm `const LIMIT = 30;` hằng số cấu hình phân trang [Display text](a "Hover text").
 
 Tạo mới một function. Ở đây tôi đặt tên tên là `list()` để lấy ra danh sách của sản phẩm. Function này sẽ được gọi phía controller.
 ```

@@ -4,7 +4,7 @@ Do you want to get data from the api? Follow me hihi @@
 
 *******
 Danh sách các api  
- 1. [API lấy danh sách sản phẩm (có phân trang)](#API_list_product)
+ 1. [API lấy danh sách sản phẩm (phân trang)](#API_list_product)
  2. [API tạo sản phẩm](#API_create_product)
  3. [API chi tiết sản phẩm](#API_show_product)
  4. [API cập nhật sản phẩm](#API_update_basic_product)
@@ -17,7 +17,7 @@ Danh sách các api
 
 <div id='API_list_product'/>  
 
-## 1. API lấy danh sách sản phẩm (có phân trang)
+## 1. API lấy danh sách sản phẩm (phân trang)
 
 URL:
 ```
@@ -31,7 +31,7 @@ Tham số truyền vào
 | type | 1 hoặc 2 | nullable |  Sản phẩm là cha hoặc biến thể |
 | limit | 10 ( tùy ý) | nullable | Số lượng bản ghi trên 1 trang|
 
-Dữ liệu trả về định dạng như sau
+Dữ liệu trả về
 ```
 {
     "message": "Get list product success",
@@ -102,7 +102,7 @@ Tham số truyền vào
 | thumbnail | https://.... | nullable | URL ảnh thumbnail của sản phẩm|
 
 
-Dữ liệu trả về định dạng như sau
+Dữ liệu trả về
 ```
 {
     "message": "Create product success",
@@ -132,7 +132,7 @@ Method GET: {{base_url}}/api/v1/product/{id}
 ```
 {id}: id của sản phẩm
 
-Dữ liệu trả về định dạng như sau
+Dữ liệu trả về
 ```
 {
     "message": "success",
@@ -297,7 +297,7 @@ Tham số truyền vào
 | thumbnail | https://.... | nullable | URL ảnh thumbnail của sản phẩm|
 
 
-Dữ liệu trả về định dạng như sau
+Dữ liệu trả về
 ```
 {
     "message": "Update product success",
@@ -334,7 +334,7 @@ Method DELETE: {{base_url}}/api/v1/product/delete/{id}
 ```
 {id}: id của sản phẩm muốn xóa
 
-Dữ liệu trả về định dạng như sau
+Dữ liệu trả về
 ```
 {
     "message": "Destroy product success",
@@ -370,7 +370,7 @@ URL:
 Method GET: {{base_url}}/api/v1/parent-product
 ```
 
-Dữ liệu trả về định dạng như sau
+Dữ liệu trả về
 ```
 {
   "message": "Get list parent product success",
@@ -407,7 +407,7 @@ URL:
 Method GET: {{base_url}}/api/v1/product-no-paginate
 ```
 
-Dữ liệu trả về định dạng như sau
+Dữ liệu trả về
 ```
 {
     "message": "Get list product success",
@@ -488,7 +488,7 @@ Dữ liệu dưới đây tôi truyền vào dạng raw (json)
 ```
 > **Note**: Bạn cũng có thể truyền dữ liệu dạng form-data (Phải custom lại). Tôi để dạng raw cho ae dễ nhìn
 
-Dữ liệu trả về định dạng như sau
+Dữ liệu trả về
 ```
 {
     "message": "Update product success",
