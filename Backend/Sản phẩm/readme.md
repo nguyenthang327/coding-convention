@@ -23,7 +23,7 @@ php artisan make:controller Api\ProductController --api
 Thêm trait `RESTResponse` cho controller
 
 File controller có dạng
-```
+```php
 <?php
 
 namespace App\Http\Controllers\Api;
@@ -43,7 +43,7 @@ class ProductController extends Controller
 
 Tạo file `ProductService.php` trong folder `App\Services\Product`.
 
-```
+```php
 <?php
 
 namespace App\Services\Product;
@@ -55,7 +55,7 @@ class ProductService
 ```
 
 Tạo function `list()` lấy danh sách của sản phẩm như sau.
-```
+```php
 <?php
 
 namespace App\Services\Product;
@@ -105,7 +105,7 @@ class ProductService
 
 File controller có dạng như sau
 
-```
+```php
 <?php
 
 namespace App\Http\Controllers\Api;
@@ -147,15 +147,17 @@ class ProductController extends Controller
 ### Bước 4: Tạo route lấy dữ liệu
 
 Vào `routes\api.php` khởi tạo route
-```
+```php
 Route::prefix('/product')->group(function () {
     Route::get('/', [ProductController::class, 'index']);
 })
 ```
 Test trên postman:
+```
 - URL: `{{base_url}}/api/v1/product`
 - Method: GET
 - Param: các tham số truyền vào
+```
 
 <div id="create_product"></div>
 
@@ -163,11 +165,11 @@ Test trên postman:
 
 ### Bước 1: Validate Request
 Tạo file xử lý validate
-```
+```bash
 php artisan make:request StoreProductRequest
 ```
 Thay đổi nội dung file
-```
+```php
 <?php
 
 namespace App\Http\Requests;
@@ -209,7 +211,7 @@ class StoreProductRequest extends FormRequest
 
 Vào `ProductController.php` thêm đoạn mã sau
 
-```
+```php
 <?php
 
 namespace App\Http\Controllers\Api;
@@ -251,7 +253,7 @@ class ProductController extends Controller
 ### Bước 3: Thêm logic thêm mới sản phẩm trong ProductService
 
 Tại file `ProductService.php` thêm function `storeProduct()`
-```
+```php
 <?php
 
 namespace App\Services\Product;
@@ -294,16 +296,18 @@ class ProductService
 
 Vào `routes\api.php` khởi tạo route lưu sản phẩm
 
-```
+```php
 Route::prefix('/product')->group(function () {
     ...
     Route::post('/store', [ProductController::class, 'store']);
 })
 ```
 Test trên postman:
+``
 - URL: `{{base_url}}/api/v1/product/store`
 - Method: POST
 - Param: các tham số cần truyền
+``
 
 ## Note utiles: 
 * Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`. Điều này giúp chúng ta dễ dàng phát hiện nguyên nhân lỗi và debug lỗi đó.
