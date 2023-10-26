@@ -103,9 +103,9 @@ Chia thư mục lưu trữ như sau
     <link rel="shortcut icon" href="{{ env('FAVICON_URL', '') }}">
 
     <!--  import các libary css chung cần thiết -->
-    
+    <script src="{{asset('assets/libary/toastr/toastr.min.css')}}"></script>
 
-     <!--  import các libary css riêng nếu cần với page đó -->
+    <!--  import các libary css riêng nếu cần với page đó -->
     @yield('css_library')
 
     <!--  Common css -->
@@ -134,8 +134,7 @@ Chia thư mục lưu trữ như sau
     </div>
 
     <!-- import các libary js chung cần thiết -->
-    <!-- Tránh sử dụng link cdn vì đây chỉ là ví dụ demo. Nên download file về để sử dụng hoặc tải thư viện trong node_modules -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="{{asset('assets/libary/toastr/toastr.min.js')}}"></script>
 
     <!-- import các libary js riêng nếu cần với page đó -->
     @yield('js_library')
@@ -172,5 +171,10 @@ Chia thư mục lưu trữ như sau
     </script>
 </body>
 </html>
+```
+
+## 2.2. File script-libary.blade.php
+
+```html
 
 ```
