@@ -241,7 +241,7 @@ class ProductController extends Controller
                 ->setMessage('Create product success') // set Message trả về
                 ->successResponse(); // set status trả về
         }catch(Exception $e){
-            Log::error("[ProductController][store] error " . $e->getMessage());
+            Log::error("[ProductController][store] error " . $e->getMessage()); // log lỗi
             return $this->throwInternalError($e);
         }
     }

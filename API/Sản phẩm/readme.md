@@ -1,6 +1,8 @@
-# This is API Product
-Do you want to get data from the api? Follow me hihi @@
-> **Note**: Sản phẩm chỉ có 2 cấp. Các api response có key `related_product_ids` mặc định là null vì đang lưu dữ liệu sản phẩm liên quan tại bảng related_products.
+# API module sản phẩm (Product)
+
+> **Note**:
+- Sản phẩm chỉ có 2 cấp.
+- Các api response có key `related_product_ids` mặc định là null vì đang lưu dữ liệu sản phẩm liên quan tại bảng related_products.
 
 *******
 Danh sách các api  
