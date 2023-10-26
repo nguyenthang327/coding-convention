@@ -1,8 +1,8 @@
 # API module sản phẩm (Product)
 
 > **Note**:
-- Sản phẩm chỉ có 2 cấp.
-- Các api response có key `related_product_ids` mặc định là null vì đang lưu dữ liệu sản phẩm liên quan tại bảng related_products.
+> Sản phẩm chỉ có 2 cấp.
+> Các api response có key `related_product_ids` mặc định là null vì đang lưu dữ liệu sản phẩm liên quan tại bảng related_products.
 
 *******
 Danh sách api  

@@ -77,7 +77,8 @@ class ProductService
             # lấy danh sách sản phẩm từ model Product
             $products = Product::query();
             $q = str_replace(' ', '%', $q); // thay thế ký tự % thành khoảng trắng trong chuỗi $q
-            if ($q) { // Nếu "keySearch" có giá trị thì thêm điều kiện truy vấn
+            // Nếu "keySearch" có giá trị thì thêm điều kiện truy vấn
+            if ($q) {
                 $products = $products->where(function ($query) use ($q) {
                     $query->where('products.code',  "like", "%$q%")
                         ->orWhere("products.name", "like", "%$q%");
@@ -154,7 +155,7 @@ Route::prefix('/product')->group(function () {
 ```
 Test trên postman:
 ```
-- URL: `{{base_url}}/api/v1/product`
+- URL: {{base_url}}/api/v1/product
 - Method: GET
 - Param: các tham số truyền vào
 ```
@@ -303,11 +304,20 @@ Route::prefix('/product')->group(function () {
 })
 ```
 Test trên postman:
-``
-- URL: `{{base_url}}/api/v1/product/store`
+```
+- URL: {{base_url}}/api/v1/product/store
 - Method: POST
 - Param: các tham số cần truyền
-``
+```
+
+<div id="show_product"></div>
+
+## 3. Chi tiết sản phẩm
+
+### Bước 1: Thêm function show() trong controller
+```php
+
+```
 
 ## Note utiles: 
 * Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`. Điều này giúp chúng ta dễ dàng phát hiện nguyên nhân lỗi và debug lỗi đó.
