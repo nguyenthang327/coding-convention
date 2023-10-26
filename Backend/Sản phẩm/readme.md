@@ -416,7 +416,7 @@ Test trên postman:
 - Method: GET
 ```
 
-<div id="update_product"></div>
+<div id="update_basic_product"></div>
 
 ## 4. Cập nhật sản phẩm
 
