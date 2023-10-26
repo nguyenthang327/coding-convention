@@ -53,9 +53,9 @@ class ProductService
 }
 ```
 
-Thêm `const LIMIT = 30;` hằng số cấu hình phân trang [Display text](a "Hover text").
+Thêm [`const LIMIT = 30;`]("Hằng số cấu hình phân trang") hằng số cấu hình phân trang [Display text]("Hover text").
 
-Tạo mới một function. Ở đây tôi đặt tên tên là `list()` để lấy ra danh sách của sản phẩm. Function này sẽ được gọi phía controller.
+Tạo function `list()` lấy danh sách của sản phẩm như sau.
 ```
 <?php
 
@@ -66,29 +66,35 @@ use Illuminate\Support\Facades\Log;
 
 class ProductService
 {
-    const LIMIT = 30;
+    const LIMIT = 30; # hằng số cấu hình phân trang
+
     public function list($request)
     {
         try {
-            $q = $request->query('q');
-            $type = $request->query('type');
-            $limit = $request->query('limit', self::LIMIT);
+            $q = $request->query('q'); // tham số tìm kiếm "keySearch" theo tên hoặc mã sản phẩm
+            $type = $request->query('type'); // tham số lọc theo loại sản phẩm
+            $limit = $request->query('limit', self::LIMIT); // tham số truyền vào khi phân trang nếu không có mặc định là 30
+
+            # lấy danh sách sản phẩm từ model Product
             $products = Product::query();
-            $q = str_replace(' ', '%', $q);
-            if ($q) {
+            $q = str_replace(' ', '%', $q); // thay thế ký tự % thành khoảng trắng trong chuỗi $q
+            if ($q) { // Nếu "keySearch" có giá trị thì thêm điều kiện truy vấn
                 $products = $products->where(function ($query) use ($q) {
                     $query->where('products.code',  "like", "%$q%")
                         ->orWhere("products.name", "like", "%$q%");
                 });
             }
+            // thêm điều kiện lọc theo loại sản phẩm nếu $type khác null
             $products->when($type, function($query, $type){
                 return $query->where('products.type', $type);
             });
             $products = $products->orderBy('products.sort_order', 'asc')
                 ->paginate($limit);
+
+            # trả về dữ liệu sản phẩm
             return $products;
         } catch (Exception $e) {
-            Log::error("[ProductService][list] error " . $e->getMessage());
+            Log::error("[ProductService][list] error " . $e->getMessage()); // Log khi xảy ra lỗi
             throw new Exception('[ProductService][list] error ' . $e->getMessage());
         }
     }
@@ -96,13 +102,10 @@ class ProductService
 }
 ```
 
-### Bước 3: Trở lại controller thêm service cho function `index()`
+### Bước 3: Thêm service trong controller
 
-Ở bước 2 ta có nói sẽ tạo service lấy danh sách sản phẩm có phân trang.
+File controller có dạng như sau
 
-Vậy ở đâu sẽ gọi service này để lấy dữ liệu?
-
-Tất nhiên là trong `ProductController`.
 ```
 <?php
 
@@ -125,14 +128,16 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         try {
-            $productService = new ProductService();
-            $data = $productService->list($request);
+            $productService = new ProductService(); // khởi tạo class ProductService để sử dụng các function
+            $data = $productService->list($request); // gọi đến function list() trong ProductService để lấy dữ liệu sản phẩm với tham số $request
+
+            # trả về dữ liệu json
             return $this
-                ->setData($data)
-                ->setMessage('Get list product success')
-                ->successResponse();
+                ->setData($data) // set giá trị $data trả về
+                ->setMessage('Get list product success') // set Message trả về
+                ->successResponse(); // set status trả về
         } catch (Exception $e) {
-            Log::error("[ProductController][index] error " . $e->getMessage());
+            Log::error("[ProductController][index] error " . $e->getMessage()); // log khi xảy ra lỗi
             return $this->throwInternalError($e);
         }
     }
@@ -140,46 +145,29 @@ class ProductController extends Controller
 }
 ```
 
-Trong hàm `index()` khởi tạo class `new ProductService()` ở service vừa viết để lấy dữ liệu và trả về cho người dùng.
+### Bước 4: Tạo route lấy dữ liệu
 
-### Bước 4: Tạo route để lấy dữ liệu
-
-Oh hòm hòm rồi nhưng làm sao để gọi được controller?
-
-Đừng lo, vào `routes\api.php` khởi tạo route
+Vào `routes\api.php` khởi tạo route
 ```
 Route::prefix('/product')->group(function () {
     Route::get('/', [ProductController::class, 'index']);
 })
 ```
-Để test kết quả hãy nhập `{{base_url}}/api/v1/product` với `{{base_url}}` là domain của website
-
-Haha xong chức năng lấy danh sách sản phẩm có phân trang rồi :laughing::laughing:.
+Test trên postman:
+- URL: `{{base_url}}/api/v1/product`
+- Method: GET
+- Param: các tham số truyền vào
 
 <div id="create_product"></div>
 
-## 2. Xây dựng chức năng tạo sản phẩm
-
-Ở trên ta đã tạo `ProductController` và `ProductService` rồi nên không cần thực hiện tạo lại nữa và sẽ viết thêm các chức năng liên quan trong này.
-
-Khi tạo sản phẩm bạn thường viết validate `Request` trong controller đúng không.
-
-Oh shit :face_with_spiral_eyes::face_with_spiral_eyes:, ở đây chúng tôi không làm thế. Tôi muốn chia nhỏ chức năng, cái nào ra cái đó.
-
-Yeah bắt đầu nào :wink:
+## 2. Thêm sản phẩm
 
 ### Bước 1: Validate Request
-Tạo file validate `StoreProductRequest.php`. Tạo như thế nào?
+Tạo file xử lý validate
 ```
 php artisan make:request StoreProductRequest
 ```
-oh sau khi chạy command này bạn sẽ nhận được một file trong folder `App\Http\Requests`
-
-lalala xử lý thôi.
-
-- Trong function `authorize()` đổi thành `return true;`
-- Trong function `rules()` validate tham số truyền vào. Dưới đây là ví dụ nho nhỏ.
-
+Thay đổi nội dung file
 ```
 <?php
 
@@ -196,7 +184,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return true; // Chuyển giá trị từ false thành true
     }
 
     /**
@@ -206,8 +194,9 @@ class StoreProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        # Viết các điều kiện validate nếu lỗi trả về 422
         $rules = [
-            'code' => 'required|string|max:255|unique:products,code',
+            'code' => 'required|string|max:255|unique:products,code', 
             'name' => 'required|string|max:255',
             'price' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
@@ -217,9 +206,9 @@ class StoreProductRequest extends FormRequest
 }
 ```
 
-### Bước 2: Xử lý trong controller
+### Bước 2: Thêm function store() trong controller
 
-Vào ProductController thêm đoạn mã sau
+Vào `ProductController.php` thêm đoạn mã sau
 
 ```
 <?php
@@ -243,12 +232,14 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         try{
-            $productService = new ProductService();
-            $data = $productService->storeProduct($request);
+            $productService = new ProductService(); // khởi tạo class ProductService
+            $data = $productService->storeProduct($request); // gọi đến function storeProduct() trong ProductService để xử lý thêm mới sản phẩm với tham số $request truyền vào
+
+            # trả về dữ liệu json
             return $this
-                ->setData($data)
-                ->setMessage('Create product success')
-                ->successResponse();
+                ->setData($data) // set giá trị $data trả về
+                ->setMessage('Create product success') // set Message trả về
+                ->successResponse(); // set status trả về
         }catch(Exception $e){
             Log::error("[ProductController][store] error " . $e->getMessage());
             return $this->throwInternalError($e);
@@ -258,11 +249,9 @@ class ProductController extends Controller
 }
 ```
 
-Trước đây ta viết `public function store(Request $request)` và 1 đống validation bên trong controller. Bây giờ chỉ còn như đoạn mã trên, bạn thấy sao hehe.
+### Bước 3: Thêm logic thêm mới trong ProductService
 
-### Bước 3: xử lý logic thêm mới trong service
-
-Chúng ta đang thêm mới sản phẩm vậy ta sẽ xử lý logic thêm mới sản phẩm trong file `ProductService.php`
+Tại file `ProductService.php` thêm function `storeProduct()`
 ```
 <?php
 
@@ -274,40 +263,37 @@ class ProductService
 {
     ...
     public function storeProduct($request){
-        DB::beginTransaction();
+        DB::beginTransaction(); // Khởi tạo Database transaction
         try {
+            # xử lý request truyền vào
             $params = [
-                'name' => $request->input('name'),
-                'code' => $request->input('code'),
-                'price' => $request->input('price'),
-                'description' => $request->input('description'),
+                'name' => $request->input('name'), // tên
+                'code' => $request->input('code'), // mã code
+                'price' => $request->input('price'), // giá
+                'description' => $request->input('description'), // mô tả
             ];
 
+            # thêm mới sản phẩm với $params đã xử lý
             $product = Product::create($params);
-            // update sort_order = product_id when create new record
-            $product->update(['sort_order' => $product->id]);
+            $product->update(['sort_order' => $product->id]); // cập nhật sort_order = id của sản phẩm vừa tạo
 
-            DB::commit();
+            DB::commit(); // thực hiện lưu dữ liệu vào DB nếu không xảy ra exception
+
+            # Trả về dữ liệu
             return $product;
         } catch (Exception $e) {
-            DB::rollBack();
-            Log::error("[ProductService][storeProduct] error " . $e->getMessage());
+            DB::rollBack(); // rollback khi xảy ra lỗi
+            Log::error("[ProductService][storeProduct] error " . $e->getMessage()); // log lỗi
             throw new Exception('[ProductService][storeProduct] error ' . $e->getMessage());
         }
     }
     ...
 }
 ```
-Đoạn code này chỉ là một đoạn code đơn giản. Nhưng đối với những đoạn code phức tạp xử lý logic nhiều bạn có thể `comment` ghi chú để sau này `maintain` dễ dàng hơn. Đoạn trên mình chỉ ví dụ comment thôi chứ logic đơn giản vãi chưởng nhìn phát hiểu ngay.
-
-À bạn thấy gì không, ngoài bắt `exception` ghi `log` lỗi ra thì cũng cần xử lý `Transaction` khi thao tác với `database`. Việc này giúp phòng những trường hợp lỗi thì sẽ tự động `rollback` lại mà không gây ảnh hưởng đến `database`.
-
-> **Note**:
-> - Logic khó, xử lý phức tạp => comment
-> - Logic đơn giản, dễ đọc => không cần comment
 
 ### Bước 4: Tạo route
-Oh hòm hòm rồi. Vào `routes\api.php` khởi tạo route lưu sản phẩm thôi nào
+
+Vào `routes\api.php` khởi tạo route lưu sản phẩm
 
 ```
 Route::prefix('/product')->group(function () {
@@ -315,9 +301,10 @@ Route::prefix('/product')->group(function () {
     Route::post('/store', [ProductController::class, 'store']);
 })
 ```
-Để test kết quả hãy nhập `{{base_url}}/api/v1/product/store` với `{{base_url}}` là domain của website cùng với các tham số truyền vào.
-
-Haha xong chức năng thêm mới sản phẩm rồi :laughing::laughing:.
+Test trên postman:
+- URL: `{{base_url}}/api/v1/product/store`
+- Method: POST
+- Param: các tham số cần truyền
 
 ## Note utiles: 
 * Tại mỗi function phải đặt `try{} catch(){}` để bắt ngoại lệ và phải ghi log lỗi với cú pháp `[tên class][tên function] error: nối với message lỗi`. Điều này giúp chúng ta dễ dàng phát hiện nguyên nhân lỗi và debug lỗi đó.
