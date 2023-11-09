@@ -173,6 +173,8 @@ Chia thư mục lưu trữ như sau
 </html>
 ```
 
+<div id='file_script_libary'/>
+
 ## 2.2. File script-libary.blade.php
 
 ```html
